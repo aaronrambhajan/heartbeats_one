@@ -42,8 +42,7 @@ app.post('/experiment-data', function(req, res) {
     res.end();
 });
 
-// process.env.PORT
-const server = app.listen(3000, function() {
+const server = app.listen(process.env.PORT, function() {
     console.log("Listening on port %d", server.address().port);
 });
 
