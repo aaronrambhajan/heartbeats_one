@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>heartbeats; (1)</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"> </script>
+    <script src="../jsPsych/jspsych.js"></script>
+    <script src="../jsPsych/plugins/jspsych-audio-keyboard-response.js"></script>
+    <link href="./experiment.css" rel="stylesheet" type="text/css"/> 
+    <link href="../jsPsych/css/jspsych.css" rel="stylesheet" type="text/css"/>
+  </head>
+  <body>
+      <div class="parent">
+          <div class="child">
+              <div id="jspsych_target"></div>
+          </div>
+      </div>
+  </body>
+    <script>
+    let r = 82;
+    let i = 73;
+    let _prompt = '<div class="stimuli">Is this heartbeat regular [r] or irregular [i]?</div>';
+    const REG =
+    ['./sound/REG44K/0.mp3','./sound/REG44K/1.mp3','./sound/REG44K/10.mp3','./sound/REG44K/11.mp3','./sound/REG44K/12.mp3','./sound/REG44K/13.mp3','./sound/REG44K/14.mp3','./sound/REG44K/15.mp3','./sound/REG44K/16.mp3','./sound/REG44K/17.mp3','./sound/REG44K/18.mp3','./sound/REG44K/19.mp3','./sound/REG44K/2.mp3','./sound/REG44K/20.mp3','./sound/REG44K/21.mp3','./sound/REG44K/22.mp3','./sound/REG44K/23.mp3','./sound/REG44K/24.mp3','./sound/REG44K/25.mp3','./sound/REG44K/26.mp3','./sound/REG44K/27.mp3','./sound/REG44K/28.mp3','./sound/REG44K/29.mp3','./sound/REG44K/3.mp3','./sound/REG44K/30.mp3','./sound/REG44K/31.mp3','./sound/REG44K/32.mp3','./sound/REG44K/33.mp3','./sound/REG44K/34.mp3','./sound/REG44K/35.mp3','./sound/REG44K/36.mp3','./sound/REG44K/37.mp3','./sound/REG44K/38.mp3','./sound/REG44K/39.mp3','./sound/REG44K/4.mp3','./sound/REG44K/40.mp3','./sound/REG44K/41.mp3','./sound/REG44K/42.mp3','./sound/REG44K/43.mp3','./sound/REG44K/44.mp3','./sound/REG44K/45.mp3','./sound/REG44K/46.mp3','./sound/REG44K/47.mp3','./sound/REG44K/48.mp3','./sound/REG44K/49.mp3','./sound/REG44K/5.mp3','./sound/REG44K/50.mp3','./sound/REG44K/51.mp3','./sound/REG44K/52.mp3','./sound/REG44K/53.mp3','./sound/REG44K/54.mp3','./sound/REG44K/55.mp3','./sound/REG44K/56.mp3','./sound/REG44K/57.mp3','./sound/REG44K/58.mp3','./sound/REG44K/59.mp3','./sound/REG44K/6.mp3','./sound/REG44K/60.mp3','./sound/REG44K/61.mp3','./sound/REG44K/62.mp3','./sound/REG44K/63.mp3','./sound/REG44K/64.mp3','./sound/REG44K/65.mp3','./sound/REG44K/66.mp3','./sound/REG44K/67.mp3','./sound/REG44K/68.mp3','./sound/REG44K/7.mp3','./sound/REG44K/8.mp3','./sound/REG44K/9.mp3'];
+    const IRG =
+    ['./sound/IRG44K/0.mp3','./sound/IRG44K/1.mp3','./sound/IRG44K/10.mp3','./sound/IRG44K/11.mp3','./sound/IRG44K/12.mp3','./sound/IRG44K/13.mp3','./sound/IRG44K/14.mp3','./sound/IRG44K/15.mp3','./sound/IRG44K/16.mp3','./sound/IRG44K/17.mp3','./sound/IRG44K/18.mp3','./sound/IRG44K/19.mp3','./sound/IRG44K/2.mp3','./sound/IRG44K/20.mp3','./sound/IRG44K/21.mp3','./sound/IRG44K/22.mp3','./sound/IRG44K/23.mp3','./sound/IRG44K/24.mp3','./sound/IRG44K/25.mp3','./sound/IRG44K/26.mp3','./sound/IRG44K/27.mp3','./sound/IRG44K/28.mp3','./sound/IRG44K/29.mp3','./sound/IRG44K/3.mp3','./sound/IRG44K/30.mp3','./sound/IRG44K/31.mp3','./sound/IRG44K/32.mp3','./sound/IRG44K/33.mp3','./sound/IRG44K/34.mp3','./sound/IRG44K/35.mp3','./sound/IRG44K/36.mp3','./sound/IRG44K/37.mp3','./sound/IRG44K/38.mp3','./sound/IRG44K/39.mp3','./sound/IRG44K/4.mp3','./sound/IRG44K/40.mp3','./sound/IRG44K/41.mp3','./sound/IRG44K/42.mp3','./sound/IRG44K/43.mp3','./sound/IRG44K/44.mp3','./sound/IRG44K/45.mp3','./sound/IRG44K/46.mp3','./sound/IRG44K/47.mp3','./sound/IRG44K/48.mp3','./sound/IRG44K/49.mp3','./sound/IRG44K/5.mp3','./sound/IRG44K/50.mp3','./sound/IRG44K/51.mp3','./sound/IRG44K/52.mp3','./sound/IRG44K/53.mp3','./sound/IRG44K/54.mp3','./sound/IRG44K/55.mp3','./sound/IRG44K/56.mp3','./sound/IRG44K/57.mp3','./sound/IRG44K/58.mp3','./sound/IRG44K/59.mp3','./sound/IRG44K/6.mp3','./sound/IRG44K/60.mp3','./sound/IRG44K/61.mp3','./sound/IRG44K/62.mp3','./sound/IRG44K/63.mp3','./sound/IRG44K/64.mp3','./sound/IRG44K/65.mp3','./sound/IRG44K/66.mp3','./sound/IRG44K/67.mp3','./sound/IRG44K/68.mp3','./sound/IRG44K/69.mp3','./sound/IRG44K/7.mp3','./sound/IRG44K/70.mp3','./sound/IRG44K/71.mp3','./sound/IRG44K/72.mp3','./sound/IRG44K/73.mp3','./sound/IRG44K/74.mp3','./sound/IRG44K/75.mp3','./sound/IRG44K/76.mp3','./sound/IRG44K/77.mp3','./sound/IRG44K/78.mp3','./sound/IRG44K/79.mp3','./sound/IRG44K/8.mp3','./sound/IRG44K/80.mp3','./sound/IRG44K/81.mp3','./sound/IRG44K/82.mp3','./sound/IRG44K/83.mp3','./sound/IRG44K/84.mp3','./sound/IRG44K/85.mp3','./sound/IRG44K/86.mp3','./sound/IRG44K/87.mp3','./sound/IRG44K/88.mp3','./sound/IRG44K/89.mp3','./sound/IRG44K/9.mp3','./sound/IRG44K/90.mp3','./sound/IRG44K/91.mp3'];
+
+    /* Callback function for saving to database. */
+    function saveTrials() {
+        $.ajax({
+            type: "POST",
+            url: "/experiment-data",
+            data: jsPsych.data.getLastTrialData().json(), // jsPsych.data.get().json()
+            contentType: "application/json"
+        }).done(function() {
+            console.log("Successfully written to database.");
+//            window.location.href = '/'; // redirect to a 'finished' page 
+        }).fail(function() {
+            alert("Problem occurred when writing to database.");
+            window.location.href = '/error'; // redirect to an 'error' page
+        })
+    }
+
+    function updateLoaded() {
+        console.log('Audio Preloaded.');
+    }
+    
+    function finished() {
+        alert('YOU DONE');
+    }
+
+    function startExperiment(exp) {
+        jsPsych.init({
+            timeline: exp,
+            on_finish: finished 
+        });
+    }
+
+    /* Creates the timeline of all trials throughout the experiment. */
+    function createTrials(filenames, _learning) {
+        let experiment = [];
+        let len = filenames.length;
+        for (i=0; i < len; i++) {
+            // Determine correct response
+            let _filename = filenames.pop();
+            let _correct_res;
+            if (_filename.indexOf('IRG') > -1) { // Irregular
+                _correct_res = i;
+            } else { 
+                _correct_res = r;
+            }
+
+            // Create trial
+            var trial = {
+                type: 'audio-keyboard-response',
+                stimulus: _filename,
+                choice: [r, i],
+                prompt: _prompt,
+                correct_response: _correct_res, // Proper answer
+                learning: _learning, // Feedback
+                trial_ends_after_audio: true, // Exit if audio finishes.
+                response_ends_trial: true, // Exit if they respond.
+                on_finish: saveTrials
+            };
+            experiment.push(trial);
+        }
+        return experiment;
+    }
+
+    /* Pieces all trials together and returns. */
+    function renderTrials(reg, irreg) {
+        const test = _.sample(reg, 10).concat(_.sample(irreg, 10));
+        const learning = createTrials(_.shuffle(test), true);
+        const testing = createTrials(_.shuffle(test), false);
+        return {exp: learning.concat(testing), sounds: test};
+    }
+
+    /* Load all audio then RUN */
+    const info = renderTrials(REG, IRG);
+    jsPsych.pluginAPI.preloadAudioFiles(info.sounds, startExperiment(info.exp), updateLoaded());
+
+    </script>
+</html>

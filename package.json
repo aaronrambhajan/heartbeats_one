@@ -1,0 +1,28 @@
+{
+  "name": "heartbeats_one",
+  "version": "1.0.0",
+  "description": "heartbeat experiment based on http://github.com/Tuuleh/jsPsychBackendStart/",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaronrambhajan/heartbeats_one.git"
+  },
+  "author": "aaronrambhajan",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "https://github.com/aaronrambhajan/heartbeats_one",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "mongoose": "^5.1.1",
+    "nodemon": "^1.17.4",
+    "underscore": "^1.9.0"
+  },
+  "devDependencies": {}
+}
