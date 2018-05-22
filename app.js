@@ -2,14 +2,14 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const body_parser = require('body-parser');
-//const ts = require('./trials.js');
+// const ts = require('./trials.js');
 
 // Define database
 let schema = new mongoose.Schema({}, { strict: false});
 let Entry = mongoose.model('Entry', schema);
 
-mongoose.connect('mongodb://localhost/jspsych');
-// mongoose.connect(process.env.CONNECTION);
+// mongoose.connect('mongodb://localhost/jspsych');
+mongoose.connect(process.env.CONNECTION);
 let db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error'));
