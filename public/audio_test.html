@@ -82,9 +82,11 @@
                 prompt: _prompt,
                 correct_response: _correct_res, // Proper answer
                 learning: _learning, // Feedback
+                trial_duration: 10000, // Max length of trial
+                post_trial_gap: 1000, // After response, time w/o sound
                 trial_ends_after_audio: true, // Exit if audio finishes.
                 response_ends_trial: true, // Exit if they respond.
-                on_finish: saveTrials // || None
+                on_finish: saveTrials // Saves to DB on every trial.
             };
             experiment.push(trial);
         }
@@ -99,13 +101,11 @@
         return {exp: learning.concat(testing), sounds: test};
     }
 
-// Pause in-between trials w/o sound # init: default_iti: 500
 // Instructions: Note obstructing noise to be ignoreds
 // On feedback, *display* the correct answer in text (see: TODO)
 // Limit all to 10 seconds # trial_duration: 10000
 // Timed progress bar
 // ( 20 learning * 3 ) + 20 testing
-// Unique ID's for participants
 
     /* Load all audio then RUN */
     const info = renderTrials(REG, IRG);

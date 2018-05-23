@@ -98,7 +98,6 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
           jsPsych.pluginAPI.setTimeout(function() { end_trial(); }, 2500);
          }
       } else {
-        console.log('else');
         audio.addEventListener('ended', end_trial);
       }
     }
@@ -203,11 +202,16 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
       });
     }
 
-    // end trial if time limit is set
+            // end trial if time limit is set
     if (trial.trial_duration !== null) {
+
       jsPsych.pluginAPI.setTimeout(function() {
-        end_trial();
+          display_element.querySelector('.stimuli').id += 'responded_wrong';
+          jsPsych.pluginAPI.setTimeout(function() { end_trial(); }, 2500);
+
+//        end_trial();
       }, trial.trial_duration);
+
     }
 
   };
