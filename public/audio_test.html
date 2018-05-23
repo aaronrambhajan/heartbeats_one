@@ -20,6 +20,7 @@
     let r = 82;
     let i = 73;
     let _prompt = '<div class="stimuli">Is this heartbeat regular <font color="#000080"><b>[r]</b></font> or irregular <font color="#C71585"><b>[i]</b></font>?</div>';
+    // TODO let feedback = 'This heartbeat is *regular*/*irregular';
     const REG =
     ['./sound/REG44K/0.mp3','./sound/REG44K/1.mp3','./sound/REG44K/10.mp3','./sound/REG44K/11.mp3','./sound/REG44K/12.mp3','./sound/REG44K/13.mp3','./sound/REG44K/14.mp3','./sound/REG44K/15.mp3','./sound/REG44K/16.mp3','./sound/REG44K/17.mp3','./sound/REG44K/18.mp3','./sound/REG44K/19.mp3','./sound/REG44K/2.mp3','./sound/REG44K/20.mp3','./sound/REG44K/21.mp3','./sound/REG44K/22.mp3','./sound/REG44K/23.mp3','./sound/REG44K/24.mp3','./sound/REG44K/25.mp3','./sound/REG44K/26.mp3','./sound/REG44K/27.mp3','./sound/REG44K/28.mp3','./sound/REG44K/29.mp3','./sound/REG44K/3.mp3','./sound/REG44K/30.mp3','./sound/REG44K/31.mp3','./sound/REG44K/32.mp3','./sound/REG44K/33.mp3','./sound/REG44K/34.mp3','./sound/REG44K/35.mp3','./sound/REG44K/36.mp3','./sound/REG44K/37.mp3','./sound/REG44K/38.mp3','./sound/REG44K/39.mp3','./sound/REG44K/4.mp3','./sound/REG44K/40.mp3','./sound/REG44K/41.mp3','./sound/REG44K/42.mp3','./sound/REG44K/43.mp3','./sound/REG44K/44.mp3','./sound/REG44K/45.mp3','./sound/REG44K/46.mp3','./sound/REG44K/47.mp3','./sound/REG44K/48.mp3','./sound/REG44K/49.mp3','./sound/REG44K/5.mp3','./sound/REG44K/50.mp3','./sound/REG44K/51.mp3','./sound/REG44K/52.mp3','./sound/REG44K/53.mp3','./sound/REG44K/54.mp3','./sound/REG44K/55.mp3','./sound/REG44K/56.mp3','./sound/REG44K/57.mp3','./sound/REG44K/58.mp3','./sound/REG44K/59.mp3','./sound/REG44K/6.mp3','./sound/REG44K/60.mp3','./sound/REG44K/61.mp3','./sound/REG44K/62.mp3','./sound/REG44K/63.mp3','./sound/REG44K/64.mp3','./sound/REG44K/65.mp3','./sound/REG44K/66.mp3','./sound/REG44K/67.mp3','./sound/REG44K/68.mp3','./sound/REG44K/7.mp3','./sound/REG44K/8.mp3','./sound/REG44K/9.mp3'];
     const IRG =
@@ -47,17 +48,19 @@
     
     function finished() {
         alert('YOU DONE');
+        window.location.href = 'http://rambhajan.me/'; // Redirect to Google Form?
     }
 
     function startExperiment(exp) {
         jsPsych.init({
             timeline: exp,
-            on_finish: finished 
+            on_finish: finished
         });
     }
 
     /* Creates the timeline of all trials throughout the experiment. */
     function createTrials(filenames, _learning) {
+        const sbj = new Date().valueOf().toString(36) + Math.random().toString(36).substr(2);
         let experiment = [];
         let len = filenames.length;
         for (i=0; i < len; i++) {
@@ -72,6 +75,7 @@
 
             // Create trial
             var trial = {
+                subject: sbj,
                 type: 'audio-keyboard-response',
                 stimulus: _filename,
                 choice: [r, i],
@@ -80,7 +84,7 @@
                 learning: _learning, // Feedback
                 trial_ends_after_audio: true, // Exit if audio finishes.
                 response_ends_trial: true, // Exit if they respond.
-                on_finish: saveTrials
+                on_finish: saveTrials // || None
             };
             experiment.push(trial);
         }
@@ -94,6 +98,14 @@
         const testing = createTrials(_.shuffle(test), false);
         return {exp: learning.concat(testing), sounds: test};
     }
+
+// Pause in-between trials w/o sound # init: default_iti: 500
+// Instructions: Note obstructing noise to be ignoreds
+// On feedback, *display* the correct answer in text (see: TODO)
+// Limit all to 10 seconds # trial_duration: 10000
+// Timed progress bar
+// ( 20 learning * 3 ) + 20 testing
+// Unique ID's for participants
 
     /* Load all audio then RUN */
     const info = renderTrials(REG, IRG);

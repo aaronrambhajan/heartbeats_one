@@ -18,6 +18,12 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
     name: 'audio-keyboard-response',
     description: '',
     parameters: {
+      subject: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Subject ID',
+        default: undefined,
+        description: 'Unique identification for participant'
+      },
       stimulus: {
         type: jsPsych.plugins.parameterType.AUDIO,
         pretty_name: 'Stimulus',
@@ -132,11 +138,11 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
         response.rt = Math.round(response.rt * 1000);
       }
       var trial_data = {
+        "subject": trial.subject,
         "rt": response.rt,
         "stimulus": trial.stimulus,
         "key_press": response.key,
-        "correct": (response.key == trial.correct_response),
-        "date": Date()
+        "correct": (response.key == trial.correct_response)
       };
 
       // clear the display

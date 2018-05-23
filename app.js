@@ -8,7 +8,7 @@ const body_parser = require('body-parser');
 let schema = new mongoose.Schema({}, { strict: false});
 let Entry = mongoose.model('Entry', schema);
 
-// mongoose.connect('mongodb://localhost/jspsych');
+//mongoose.connect('mongodb://localhost/jspsych');
 mongoose.connect(process.env.CONNECTION);
 let db = mongoose.connection;
 
