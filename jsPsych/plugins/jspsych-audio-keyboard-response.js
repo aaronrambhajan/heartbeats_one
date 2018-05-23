@@ -93,10 +93,8 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
     if(trial.trial_ends_after_audio){
       if(context !== null){
         source.onended = function() {
-          // Adapt to give text
-          display_element.querySelector('.stimuli').id += 'responded_wrong';
-          jsPsych.pluginAPI.setTimeout(function() { end_trial(); }, 2500);
-         }
+          respond('audio_ended');
+        }
       } else {
         audio.addEventListener('ended', end_trial);
       }
@@ -113,24 +111,27 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
       key: null
     };
 
+    // Stop the audio file if playing
+    function stop_audio() {
+        if (context !== null) {
+            source.stop();
+            source.onended=function() { }
+        } else {
+            audio.pause();
+            audio.removeEventListener('ended', end_trial);
+        }
+    }
+
+
     // function to end trial when it is time
     function end_trial() {
 
       // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
-
-      // stop the audio file if it is playing
-      // remove end event listeners if they exist
-      if(context !== null){
-        source.stop();
-        source.onended = function() { }
-      } else {
-        audio.pause();
-        audio.removeEventListener('ended', end_trial);
-      }
-
+      // stop_audio();
+      
       // kill keyboard listeners
-      jsPsych.pluginAPI.cancelAllKeyboardResponses();
+      // jsPsych.pluginAPI.cancelAllKeyboardResponses();
 
       // gather the data to store for the trial
       if(context !== null && response.rt !== null){
@@ -159,18 +160,12 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
         response = info;
       }
 
-      // Give feedback
-      if (trial.learning) {
-          // If learning, give correctness feedback
-          if (response.key == trial.correct_response) {
-            display_element.querySelector('.stimuli').id += 'responded_correct';
-          } else {
-            display_element.querySelector('.stimuli').id += 'responded_wrong';
-          }  
-      } else { // Neutral response
-          display_element.querySelector('.stimuli').id += 'responded';
+      // Check for correct response.
+      if (response.key == trial.correct_response) {
+        respond('correct_response');
+      } else {
+        respond('wrong_response');
       }
-      jsPsych.pluginAPI.setTimeout(function() { end_trial(); }, 2500);    
     };
 
     // start audio
@@ -202,18 +197,50 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
       });
     }
 
-            // end trial if time limit is set
+    // end trial if time limit is set
     if (trial.trial_duration !== null) {
-
       jsPsych.pluginAPI.setTimeout(function() {
-          display_element.querySelector('.stimuli').id += 'responded_wrong';
-          jsPsych.pluginAPI.setTimeout(function() { end_trial(); }, 2500);
-
-//        end_trial();
+          respond('trial_ended');
       }, trial.trial_duration);
-
     }
 
+    function respond(action) {
+        
+        // Determine heartbeat state
+        let heartbeat_status;
+        if (trial.correct_response == 82) {
+            heartbeat_status = '<font color="#000080"><b>regular</b></font>.</div>';
+        } else {
+            heartbeat_status = '<font color="#C71585"><b>irregular</b></font>.</div>';
+        }
+        let changed;
+        let correct_text = '<div class="stimuli" id="responded_correct">Correct. This heartbeat is ' + heartbeat_status;
+        let wrong_text = '<div class="stimuli" id="responded_wrong">Incorrect. This heartbeat is ' + heartbeat_status;
+        let none_text1 = '<div class="stimuli" id="responded_wrong">Please respond before the audio ends.</div>';
+        let none_text2 = '<div class="stimuli" id="responded_wrong">Please respond before the trial ends.</div>';
+        let test_text = '<div class="stimuli" id="responded"></div>';
+        
+        switch(action) {
+            case 'audio_ended':
+                changed = none_text1;
+                break;
+            case 'trial_ended':
+                changed = none_text2;
+                break;
+            case 'correct_response':
+                if (trial.learning) { changed = correct_text; } 
+                else { changed = test_text; }
+                break;
+            case 'wrong_response':
+                if (trial.learning) { changed = wrong_text; }
+                else { changed = test_text; }
+        }
+        
+        jsPsych.pluginAPI.cancelAllKeyboardResponses();
+        display_element.innerHTML = changed;
+        stop_audio();
+        jsPsych.pluginAPI.setTimeout(function() { end_trial(); }, 3000);
+    }
   };
 
   return plugin;

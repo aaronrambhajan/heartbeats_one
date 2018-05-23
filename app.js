@@ -5,7 +5,7 @@ const body_parser = require('body-parser');
 // const ts = require('./trials.js');
 
 // Define database
-let schema = new mongoose.Schema({}, { strict: false});
+let schema = new mongoose.Schema({}, { strict: false });
 let Entry = mongoose.model('Entry', schema);
 
 //mongoose.connect('mongodb://localhost/jspsych');
