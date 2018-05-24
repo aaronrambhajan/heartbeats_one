@@ -2,19 +2,15 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const body_parser = require('body-parser');
-// const ts = require('./trials.js');
+const trialData = require('./models/trialData');
 
-// Define database
-let schema = new mongoose.Schema({}, { strict: false });
-let Entry = mongoose.model('Entry', schema);
 
 //mongoose.connect('mongodb://localhost/jspsych');
 mongoose.connect(process.env.CONNECTION);
 let db = mongoose.connection;
-
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function callback() {
-    console.log('database opened');
+    console.log('Database opened');
 });
 
 app.use(body_parser.json());
@@ -30,18 +26,23 @@ app.get('/', function(req, res) {
 });
 
 app.get('/experiment', function(req, res) {
-     // {learning: {}, testing: {}}
-     // const timeline = ts('./public/sound/regular', './public/sound/irregular');
      res.render('audio_test.html');
 });
 
 app.post('/experiment-data', function(req, res) {
-    Entry.create({
-        'data': req.body
-    });    
+    TrialData.create({
+        'subject': req.body[0].subject,
+        'trial': req.body[0].trial_index,
+        'stimulus': req.body[0].stimulus,
+        'rt': req.body[0].rt,
+        'r': req.body[0].key_press,
+        'correct': req.body[0].correct,
+        'timestamp': req.body[0].date
+    });
     res.end();
 });
 
+//3000
 const server = app.listen(process.env.PORT, function() {
     console.log("Listening on port %d", server.address().port);
 });
