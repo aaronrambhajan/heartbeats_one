@@ -81,7 +81,7 @@
                 prompt: _prompt,
                 correct_response: _correct_res, // Proper answer
                 learning: _learning, // Feedback
-                trial_duration: 10000, // Max length of trial
+                trial_duration: 8000, // Max length of trial
                 trial_ends_after_audio: true, // Exit if audio finishes.
                 response_ends_trial: true, // Exit if they respond.
                 on_finish: saveTrials // Saves to DB on every trial.
@@ -106,7 +106,6 @@
 
     /* Load all audio then RUN */
     const info = renderTrials(REG, IRG);
-    console.log(info);
     jsPsych.pluginAPI.preloadAudioFiles(info.sounds, startExperiment(info.exp), updateLoaded());
 
     </script>

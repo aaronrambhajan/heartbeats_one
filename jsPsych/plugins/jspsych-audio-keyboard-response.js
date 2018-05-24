@@ -89,7 +89,7 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
       audio.currentTime = 0;
     }
 
-    // If all audio plays with no response...    
+/*    // If all audio plays with no response...    
     if(trial.trial_ends_after_audio){
       if(context !== null){
         source.onended = function() {
@@ -99,7 +99,7 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
         audio.addEventListener('ended', end_trial);
       }
     }
-
+*/
     // show prompt if there is one
     if (trial.prompt !== null) {
       display_element.innerHTML = trial.prompt;
@@ -127,7 +127,7 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
     function end_trial() {
 
       // kill any remaining setTimeout handlers
-      jsPsych.pluginAPI.clearAllTimeouts();
+      //jsPsych.pluginAPI.clearAllTimeouts();
       // stop_audio();
       
       // kill keyboard listeners
@@ -217,13 +217,13 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
         let changed;
         let correct_text = '<div class="stimuli" id="responded_correct">Correct. This heartbeat is ' + heartbeat_status;
         let wrong_text = '<div class="stimuli" id="responded_wrong">Incorrect. This heartbeat is ' + heartbeat_status;
-        let none_text1 = '<div class="stimuli" id="responded_wrong">Please respond before the audio ends.</div>';
+        // let none_text1 = '<div class="stimuli" id="responded_wrong">Please respond before the audio ends.</div>';
         let none_text2 = '<div class="stimuli" id="responded_wrong">Please respond before the trial ends.</div>';
         let test_text = '<div class="stimuli" id="responded"></div>';
         
         switch(action) {
             case 'audio_ended':
-                changed = none_text1;
+                changed = none_text2;
                 break;
             case 'trial_ended':
                 changed = none_text2;
@@ -237,9 +237,10 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
                 else { changed = test_text; }
         }
         
+        jsPsych.pluginAPI.clearAllTimeouts();
         jsPsych.pluginAPI.cancelAllKeyboardResponses();
-        display_element.innerHTML = changed;
         stop_audio();
+        display_element.innerHTML = changed;
         jsPsych.pluginAPI.setTimeout(function() { end_trial(); }, 3000);
     }
   };

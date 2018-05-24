@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 const body_parser = require('body-parser');
 const trialData = require('./models/trialData');
 
-
 //mongoose.connect('mongodb://localhost/jspsych');
 mongoose.connect(process.env.CONNECTION);
 let db = mongoose.connection;
+
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function callback() {
     console.log('Database opened');
@@ -30,7 +30,7 @@ app.get('/experiment', function(req, res) {
 });
 
 app.post('/experiment-data', function(req, res) {
-    TrialData.create({
+    trialData.create({
         'subject': req.body[0].subject,
         'trial': req.body[0].trial_index,
         'stimulus': req.body[0].stimulus,
@@ -42,7 +42,6 @@ app.post('/experiment-data', function(req, res) {
     res.end();
 });
 
-//3000
 const server = app.listen(process.env.PORT, function() {
     console.log("Listening on port %d", server.address().port);
 });
