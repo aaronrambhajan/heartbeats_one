@@ -142,7 +142,8 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
         "rt": response.rt,
         "stimulus": trial.stimulus,
         "key_press": response.key,
-        "correct": (response.key == trial.correct_response)
+        "correct": (response.key == trial.correct_response),
+        "date": Date.now()
       };
 
       // clear the display
