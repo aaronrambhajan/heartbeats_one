@@ -18,10 +18,14 @@
         </body>
         <script>
         function getEmail() {
-            let person = null;            
-            let emailR = new RegExp('\S+@\S+\.\S+');
-            while (person == null) {
+            let post = false;
+            let person;            
+                
+            while (!post) {
                 person = prompt("Please enter your e-mail");
+                if (person != null && /^\S+@\S+\.\S+$/.test(person)) {
+                    post = true;
+                }
             }
 
             $.ajax({
