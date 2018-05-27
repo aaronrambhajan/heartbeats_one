@@ -5,9 +5,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"> </script>
     <script src="../jsPsych/jspsych.js"></script>
-    <script src="../jsPsych/plugins/jspsych-audio-keyboard-response.js"></script>
+    <script src="../jsPsych/plugins/jspsych-audio-keyboard-response.js"></script> 
     <link href="./experiment.css" rel="stylesheet" type="text/css"/> 
-    <link href="../jsPsych/css/jspsych.css" rel="stylesheet" type="text/css"/>
+    <!-- <link href="../jsPsych/css/jspsych.css" rel="stylesheet" type="text/css"/> -->
   </head>
   <body>
       <div class="parent">
@@ -17,10 +17,12 @@
       </div>
   </body>
     <script>
+    let score = 0;
     const r = 82;
     const i = 73;
     const sbj = new Date().valueOf().toString(36) + Math.random().toString(36).substr(2);
     let _prompt = '<div class="stimuli">Is this heartbeat regular <font color="#000080"><b>[r]</b></font> or irregular <font color="#C71585"><b>[i]</b></font>?</div>';
+    let _score = '<div class="score">0</div>';
     const REG =
     ['./sound/REG44K/a0001.mp3','./sound/REG44K/a0003.mp3','./sound/REG44K/a0005.mp3','./sound/REG44K/a0010.mp3','./sound/REG44K/a0017.mp3','./sound/REG44K/a0018.mp3','./sound/REG44K/a0020.mp3','./sound/REG44K/a0026.mp3','./sound/REG44K/a0037.mp3','./sound/REG44K/a0040.mp3','./sound/REG44K/a0042.mp3','./sound/REG44K/a0043.mp3','./sound/REG44K/a0046.mp3','./sound/REG44K/a0047.mp3','./sound/REG44K/a0048.mp3','./sound/REG44K/a0057.mp3','./sound/REG44K/b0008.mp3','./sound/REG44K/b0043.mp3','./sound/REG44K/b0046.mp3','./sound/REG44K/b0057.mp3','./sound/REG44K/b0136.mp3','./sound/REG44K/b0140.mp3','./sound/REG44K/b0164.mp3','./sound/REG44K/b0239.mp3','./sound/REG44K/b0248.mp3','./sound/REG44K/c0004.mp3','./sound/REG44K/c0031.mp3','./sound/REG44K/d0002.mp3','./sound/REG44K/d0008.mp3','./sound/REG44K/e00087.mp3','./sound/REG44K/e00135.mp3','./sound/REG44K/e00152.mp3','./sound/REG44K/e00461.mp3','./sound/REG44K/normal__109_1305653646620_C.mp3','./sound/REG44K/normal__127_1306764300147_A.mp3','./sound/REG44K/normal__127_1306764300147_B.mp3','./sound/REG44K/normal__128_1306344005749_B.mp3','./sound/REG44K/normal__129_1306344506305_D.mp3','./sound/REG44K/normal__140_1306519735121_B.mp3','./sound/REG44K/normal__146_1306778707532_B.mp3','./sound/REG44K/normal__150_1306776340746_C.mp3','./sound/REG44K/normal__168_1307970069434_A2.mp3','./sound/REG44K/normal__170_1307970562729_B.mp3','./sound/REG44K/normal__179_1307990076841_B.mp3','./sound/REG44K/normal__184_1308073010307_B.mp3','./sound/REG44K/normal__184_1308073010307_D.mp3','./sound/REG44K/normal__191_1308077299430_B.mp3','./sound/REG44K/normal__194_1308139824187_A.mp3','./sound/REG44K/normal__198_1308141739338_C.mp3','./sound/REG44K/normal__207_1308159792607_C.mp3','./sound/REG44K/normal__224_1308337157445_C.mp3','./sound/REG44K/normal__294_1311681084248_A.mp3'];
 
@@ -29,14 +31,18 @@
 
     /* Callback function for saving to database. */
     function saveTrials() {
+        let _data = jsPsych.data.getLastTrialData();
+        if (_data.correct) { score++; } else { score--; }
+        console.log(score);
+        // document.getElementById("score").innerHTML = String(score);
+        
         $.ajax({
             type: "POST",
             url: "/experiment-data",
-            data: jsPsych.data.getLastTrialData().json(), // jsPsych.data.get().json()
+            data: _data.json(), 
             contentType: "application/json"
         }).done(function() {
             console.log("Successfully written to database.");
-//            window.location.href = '/'; // redirect to a 'finished' page 
         }).fail(function() {
             alert("Problem occurred when writing to database.");
             window.location.href = '/error'; // redirect to an 'error' page
@@ -102,7 +108,6 @@
         return {exp: learning1.concat(learning2, learning3, testing), sounds: test};
     }
 
-    // TODO: Normalize all audio
     // TODO: Timed progress bar
 
     /* Load all audio then RUN */

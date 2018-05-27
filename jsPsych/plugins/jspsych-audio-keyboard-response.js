@@ -220,6 +220,7 @@ jsPsych.plugins["audio-keyboard-response"] = (function() {
         // let none_text1 = '<div class="stimuli" id="responded_wrong">Please respond before the audio ends.</div>';
         let none_text2 = '<div class="stimuli" id="responded_wrong">Please respond before the trial ends.</div>';
         let test_text = '<div class="stimuli" id="responded"></div>';
+        let _score = '<div class="score"></div>';
         
         switch(action) {
             case 'audio_ended':

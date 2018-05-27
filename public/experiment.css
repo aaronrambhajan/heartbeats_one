@@ -73,3 +73,9 @@ button {
    background-color: gray;
    color: white;
 }
+
+.score {
+   bottom: 5%;
+   font-size: 500%;
+   color: pink;
+}
