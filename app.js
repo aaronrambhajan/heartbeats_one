@@ -2,8 +2,9 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const body_parser = require('body-parser');
-const trialData = require('./models/trialData');
+const trial = require('./models/trials.js');
 
+let sessionName;
 //mongoose.connect('mongodb://localhost/jspsych');
 mongoose.connect(process.env.CONNECTION);
 let db = mongoose.connection;
@@ -29,9 +30,11 @@ app.get('/experiment', function(req, res) {
      res.render('audio_test.html');
 });
 
+
 app.post('/experiment-data', function(req, res) {
-    trialData.create({
+    trial.create({
         'subject': req.body[0].subject,
+        'email': sessionName,
         'trial': req.body[0].trial_index,
         'stimulus': req.body[0].stimulus,
         'rt': req.body[0].rt,
@@ -39,6 +42,11 @@ app.post('/experiment-data', function(req, res) {
         'correct': req.body[0].correct,
         'timestamp': req.body[0].date
     });
+    res.end();
+});
+
+app.post('/user-data', function(req, res) {
+    sessionName = req.body.user;
     res.end();
 });
 

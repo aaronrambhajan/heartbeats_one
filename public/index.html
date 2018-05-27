@@ -11,9 +11,32 @@
                                         <h1> heartbeats </h1>
                                         <p> In this experiment, you will classify heartbeats as either <font color="#000080"><b>regular</b></font> or <font color="#C71585"><b>irregular</b></font>. You will listen to a heartbeat recording, and are to respond by pressing  <font color="#000080"><b><i>r</i></b></font>  for <font color="#000080"><b>regular</b></font> or  <font color="#C71585"><b><i>i</i></b></font>  for <font color="#C71585"><b>irregular</b></font>. You must <u>respond before the recording finishes</u>. The recordings are approximately 10 seconds long. Some recording have miscellaneous noises in them: you are to ignore these. You will receive feedback for the first half, and no feedback for the second half. </p>
                                         <p> By pressing the button below, you consent to your participation in this experiment. This experiment must be done using headphones. If you have any questions, please contact the experimenter.</p> 
-                                        <button type="button" onclick="window.location='experiment'">Click <b>here</b> to proceed!</button> 
+                                        <button type="button" onclick="getEmail()">Click <b>here</b> to proceed!</button>
                                 </div>
                         </div>
                 </div>
         </body>
+        <script>
+        function getEmail() {
+            let person = null;            
+            let emailR = new RegExp('\S+@\S+\.\S+');
+            while (person == null) {
+                person = prompt("Please enter your e-mail");
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/user-data",
+                data: JSON.stringify({user: person}),
+                contentType: "application/json"
+            }).done(function() {
+                console.log("Wrote user to DB");
+            }).fail(function() {
+                alert("Problems ahead, a-dawg.");
+            })
+
+            window.location="experiment";
+        }
+
+        </script>
 </html>

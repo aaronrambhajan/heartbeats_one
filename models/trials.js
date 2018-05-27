@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 let dataSchema = new mongoose.Schema({
     subject: String,
+    email: String,
     trial: Number,
     stimulus: String,
     rt: Number,
@@ -10,5 +11,5 @@ let dataSchema = new mongoose.Schema({
     timestamp: Date
 });
 
-const trialData = mongoose.model('trialData', dataSchema);
-module.exports = trialData;
+const trial = mongoose.model('trialData', dataSchema);
+module.exports = trial;
