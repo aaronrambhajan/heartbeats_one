@@ -7,7 +7,6 @@
     <script src="../jsPsych/jspsych.js"></script>
     <script src="../jsPsych/plugins/jspsych-audio-keyboard-response.js"></script> 
     <link href="./experiment.css" rel="stylesheet" type="text/css"/> 
-    <!-- <link href="../jsPsych/css/jspsych.css" rel="stylesheet" type="text/css"/> -->
   </head>
   <body>
       <div class="parent">
@@ -54,8 +53,8 @@
     }
     
     function finished() {
-        alert('YOU DONE');
-        window.location.href = 'http://rambhajan.me/'; // Redirect to Google Form?
+        alert('Experiment Finished!');
+        window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSekZNwYwxRPtdmIyze7Ea1TwJrdQ_EHyMrbOLSNsyrsa0__Rg/viewform?usp=sf_link';
     }
 
     function startExperiment(exp) {
@@ -100,15 +99,14 @@
 
     /* Pieces all trials together and returns. */
     function renderTrials(reg, irreg) {
+        const learn = _.sample(reg, 10).concat(_.sample(irreg, 10));
         const test = _.sample(reg, 10).concat(_.sample(irreg, 10));
-        const learning1 = createTrials(_.shuffle(test), true);
-        const learning2 = createTrials(_.shuffle(test), true);
-        const learning3 = createTrials(_.shuffle(test), true);
+        const learning1 = createTrials(_.shuffle(learn), true);
+        const learning2 = createTrials(_.shuffle(learn), true);
+        const learning3 = createTrials(_.shuffle(learn), true);
         const testing = createTrials(_.shuffle(test), false);
-        return {exp: learning1.concat(learning2, learning3, testing), sounds: test};
+        return {exp: learning1.concat(learning2, learning3, testing), sounds: test.concat(learn)};
     }
-
-    // TODO: Timed progress bar
 
     /* Load all audio then RUN */
     const info = renderTrials(REG, IRG);

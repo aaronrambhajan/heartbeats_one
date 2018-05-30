@@ -1,32 +1,30 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const body_parser = require('body-parser');
-
 const trial = require('./models/trials.js');
 const user = require('./models/user.js');
 const DB = require('./models/db.js');
 
-let sessionName;
 DB.connect(true); // true if in production
-/* 
-mongoose.connect('mongodb://localhost/jspsych');
-//mongoose.connect(process.env.CONNECTION);
-let db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'connection error'));
-db.once('open', function callback() {
-    console.log('Database opened');
-});
-*/
-
 app.use(body_parser.json());
 app.use(express.static(__dirname + '/public'));
 app.use('/jsPsych', express.static(__dirname + "/jsPsych"));
-
 app.set('views', __dirname + "/public");
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
+app.use(session({
+    saveUninitialized: true, 
+    resave: true, 
+    secret: 'secret',
+    store: new MongoStore({ 
+        url: DB.getURL(),
+        autoReconnect: true,
+        collection: 'sessions'
+    })
+}));
 
 app.get('/', function(req, res) {
     res.render('index.html');
@@ -36,11 +34,16 @@ app.get('/experiment', function(req, res) {
      res.render('audio_test.html');
 });
 
+app.get('/admin-results', function(req, res) {
+     trial.find({}, function(err, data) {
+        res.send(data);
+     });
+});
 
 app.post('/experiment-data', function(req, res) {
     trial.create({
         'subject': req.body[0].subject,
-        'email': sessionName,
+        'email': req.session.email,
         'trial': req.body[0].trial_index,
         'stimulus': req.body[0].stimulus,
         'rt': req.body[0].rt,
@@ -52,7 +55,7 @@ app.post('/experiment-data', function(req, res) {
 });
 
 app.post('/user-data', function(req, res) {
-    sessionName = req.body.user;
+    req.session.email = req.body.user;
     res.end();
 });
 
@@ -75,4 +78,3 @@ app.post('/admin-registration', function(req, res) {
 const server = app.listen(DB.getPort(), function() {
     console.log("Listening on port %d", server.address().port);
 });
-

@@ -21,7 +21,12 @@ function getPort() {
     return _PORT;
 }
 
+function getURL() {
+    return _URL;
+}
+
 module.exports = {
    connect: connect,
-   getPort: getPort
+   getPort: getPort,
+   getURL: getURL
 };

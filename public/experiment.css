@@ -1,13 +1,12 @@
-/*
-Things specific to this tutorial,
-including how to centralize your stimuli 
-using a parent and child class!
-*/
+html {
+    font: 18px Helvetica, sans-serif;
+    background-color: #bbc3cb;
+    text-align: center;
+}
 
 body {
-    text-align: center;
-    background-color: #bbc3cb;
-    font: 100% Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
@@ -23,10 +22,54 @@ p {
 }
 
 button {
-    text-align: left;
-    margin-left: 25%;
-    margin-right: 25%;
+    padding: 0.5em;
+    background-color: #eaeaea;
+    border: 1px solid #eaeaea;
+    border-radius: 12.5%;
+    color: #333;
+    font-size: 50%;
+    cursor: pointer;
 }
+
+button:hover {
+    border: 1px solid #ccc;
+}
+
+/*
+ *
+ * PROGRESS BAR
+ *
+ */
+
+#jspsych-progressbar-container {
+    border-bottom: 2px solid #dedede;
+    background-color: #f3f3f3;
+    margin-bottom: 1em;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+#jspsych-progressbar-outer {
+    background-color: #dedede;
+    border-radius: 5px;
+    padding: 1px;
+    width: 800px;
+    margin: auto;
+}
+
+#jspsych-progressbar-inner {
+    background-color: #aaa;
+    width: 0%;
+    height: 1em;
+    border-radius: 5px;
+}
+
+
+/*
+ *
+ * NATIVE ELEMENTS 
+ *
+ */
 
 .parent {
     width: 100%;
