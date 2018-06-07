@@ -34,10 +34,15 @@ app.get('/experiment', function(req, res) {
      res.render('audio_test.html');
 });
 
-app.get('/admin-results', function(req, res) {
+app.get('/results', function(req, res) {
      trial.find({}, function(err, data) {
         res.send(data);
      });
+});
+
+app.post('/user-data', function(req, res) {
+    req.session.email = req.body.user;
+    res.end();
 });
 
 app.post('/experiment-data', function(req, res) {
@@ -52,27 +57,6 @@ app.post('/experiment-data', function(req, res) {
         'timestamp': req.body[0].date
     });
     res.end();
-});
-
-app.post('/user-data', function(req, res) {
-    req.session.email = req.body.user;
-    res.end();
-});
-
-app.post('/admin-registration', function(req, res) {
-    let userData = {
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password,
-        passwordConf: req.body.passwordConf
-    };
-    user.create(userData, function(err, user) {
-        if (err) {
-            return next(err);
-        } else {
-            return res.redirect('/'); // '/profile'
-        }
-    });
 });
 
 const server = app.listen(DB.getPort(), function() {

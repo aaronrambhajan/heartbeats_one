@@ -24,6 +24,7 @@
     "express-session": "^1.15.6",
     "mongoose": "^5.1.1",
     "nodemon": "^1.17.4",
+    "sass": "^1.5.1",
     "underscore": "^1.9.0"
   },
   "devDependencies": {}

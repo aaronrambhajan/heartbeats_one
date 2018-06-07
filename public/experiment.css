@@ -67,6 +67,38 @@ button:hover {
 
 /*
  *
+ * PLAYER
+ *
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+.player {
+  margin: 0 auto; 
+  width: 50%;
+}
+
+.track {
+  position: relative;
+  width: 100%;
+  height: 5em; 
+  border: 5px solid black;
+  display: inline-block;
+}
+
+.progress {
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  background: #f00;
+}
+
+
+
+/*
+ *
  * NATIVE ELEMENTS 
  *
  */

@@ -14,25 +14,26 @@
               <div id="jspsych_target"></div>
           </div>
       </div>
+
+
   </body>
     <script>
     let score = 0;
     const r = 82;
     const i = 73;
     const sbj = new Date().valueOf().toString(36) + Math.random().toString(36).substr(2);
-    let _prompt = '<div class="stimuli">Is this heartbeat regular <font color="#000080"><b>[r]</b></font> or irregular <font color="#C71585"><b>[i]</b></font>?</div>';
-    let _score = '<div class="score">0</div>';
-    const REG =
-    ['./sound/REG44K/a0001.mp3','./sound/REG44K/a0003.mp3','./sound/REG44K/a0005.mp3','./sound/REG44K/a0010.mp3','./sound/REG44K/a0017.mp3','./sound/REG44K/a0018.mp3','./sound/REG44K/a0020.mp3','./sound/REG44K/a0026.mp3','./sound/REG44K/a0037.mp3','./sound/REG44K/a0040.mp3','./sound/REG44K/a0042.mp3','./sound/REG44K/a0043.mp3','./sound/REG44K/a0046.mp3','./sound/REG44K/a0047.mp3','./sound/REG44K/a0048.mp3','./sound/REG44K/a0057.mp3','./sound/REG44K/b0008.mp3','./sound/REG44K/b0043.mp3','./sound/REG44K/b0046.mp3','./sound/REG44K/b0057.mp3','./sound/REG44K/b0136.mp3','./sound/REG44K/b0140.mp3','./sound/REG44K/b0164.mp3','./sound/REG44K/b0239.mp3','./sound/REG44K/b0248.mp3','./sound/REG44K/c0004.mp3','./sound/REG44K/c0031.mp3','./sound/REG44K/d0002.mp3','./sound/REG44K/d0008.mp3','./sound/REG44K/e00087.mp3','./sound/REG44K/e00135.mp3','./sound/REG44K/e00152.mp3','./sound/REG44K/e00461.mp3','./sound/REG44K/normal__109_1305653646620_C.mp3','./sound/REG44K/normal__127_1306764300147_A.mp3','./sound/REG44K/normal__127_1306764300147_B.mp3','./sound/REG44K/normal__128_1306344005749_B.mp3','./sound/REG44K/normal__129_1306344506305_D.mp3','./sound/REG44K/normal__140_1306519735121_B.mp3','./sound/REG44K/normal__146_1306778707532_B.mp3','./sound/REG44K/normal__150_1306776340746_C.mp3','./sound/REG44K/normal__168_1307970069434_A2.mp3','./sound/REG44K/normal__170_1307970562729_B.mp3','./sound/REG44K/normal__179_1307990076841_B.mp3','./sound/REG44K/normal__184_1308073010307_B.mp3','./sound/REG44K/normal__184_1308073010307_D.mp3','./sound/REG44K/normal__191_1308077299430_B.mp3','./sound/REG44K/normal__194_1308139824187_A.mp3','./sound/REG44K/normal__198_1308141739338_C.mp3','./sound/REG44K/normal__207_1308159792607_C.mp3','./sound/REG44K/normal__224_1308337157445_C.mp3','./sound/REG44K/normal__294_1311681084248_A.mp3'];
+    let _score = '<div class="score">0</div>',
+        _prompt = '<div class="stimuli">Is this heartbeat regular <font color="#000080"><b>[r]</b></font> or irregular <font color="#C71585"><b>[i]</b></font>?</div>',
+        _player = '<div class="player"> <p class="message"></p> <div class="controls"> <div class="track"> <div class="progress"></div> <div class="scrubber"> </div> </div> </div> </div>';
 
-    const IRG =
-    ['./sound/IRG44K/a0007.mp3','./sound/IRG44K/a0011.mp3','./sound/IRG44K/a0012.mp3','./sound/IRG44K/a0019.mp3','./sound/IRG44K/a0025.mp3','./sound/IRG44K/a0027.mp3','./sound/IRG44K/a0028.mp3','./sound/IRG44K/a0029.mp3','./sound/IRG44K/a0032.mp3','./sound/IRG44K/a0050.mp3','./sound/IRG44K/a0053.mp3','./sound/IRG44K/a0055.mp3','./sound/IRG44K/a0069.mp3','./sound/IRG44K/a0080.mp3','./sound/IRG44K/a0081.mp3','./sound/IRG44K/a0085.mp3','./sound/IRG44K/a0086.mp3','./sound/IRG44K/a0093.mp3','./sound/IRG44K/a0094.mp3','./sound/IRG44K/a0102.mp3','./sound/IRG44K/a0105.mp3','./sound/IRG44K/a0106.mp3','./sound/IRG44K/a0118.mp3','./sound/IRG44K/a0125.mp3','./sound/IRG44K/a0127.mp3','./sound/IRG44K/a0129.mp3','./sound/IRG44K/a0136.mp3','./sound/IRG44K/b0003.mp3','./sound/IRG44K/b0006.mp3','./sound/IRG44K/b0027.mp3','./sound/IRG44K/b0028.mp3','./sound/IRG44K/b0047.mp3','./sound/IRG44K/b0051.mp3','./sound/IRG44K/b0052.mp3','./sound/IRG44K/b0058.mp3','./sound/IRG44K/b0064.mp3','./sound/IRG44K/c0003.mp3','./sound/IRG44K/c0007.mp3','./sound/IRG44K/d0005.mp3','./sound/IRG44K/d0013.mp3','./sound/IRG44K/e00005.mp3','./sound/IRG44K/e00007.mp3','./sound/IRG44K/e00009.mp3','./sound/IRG44K/e00015.mp3','./sound/IRG44K/e00016.mp3','./sound/IRG44K/e00019.mp3','./sound/IRG44K/e00021.mp3','./sound/IRG44K/e00023.mp3','./sound/IRG44K/e00024.mp3','./sound/IRG44K/e00026.mp3','./sound/IRG44K/e00029.mp3','./sound/IRG44K/e00030.mp3','./sound/IRG44K/e00033.mp3','./sound/IRG44K/e00034.mp3','./sound/IRG44K/e00035.mp3','./sound/IRG44K/e00036.mp3','./sound/IRG44K/e00038.mp3','./sound/IRG44K/e00040.mp3','./sound/IRG44K/e00041.mp3','./sound/IRG44K/e00043.mp3','./sound/IRG44K/e00046.mp3','./sound/IRG44K/e00047.mp3','./sound/IRG44K/e00051.mp3','./sound/IRG44K/e00052.mp3','./sound/IRG44K/e00053.mp3','./sound/IRG44K/e00054.mp3','./sound/IRG44K/e00055.mp3','./sound/IRG44K/extrastole__128_1306344005749_A.mp3','./sound/IRG44K/extrastole__138_1306762146980_B.mp3','./sound/IRG44K/extrastole__151_1306779785624_B.mp3','./sound/IRG44K/extrastole__163_1307104470471_C.mp3','./sound/IRG44K/extrastole__179_1307990076841_C.mp3','./sound/IRG44K/extrastole__184_1308073010307_A.mp3','./sound/IRG44K/extrastole__198_1308141739338_B1.mp3','./sound/IRG44K/extrastole__210_1308162935880_C.mp3','./sound/IRG44K/extrastole__235_1308749032454_B.mp3','./sound/IRG44K/extrastole__294_1311681084248_C.mp3','./sound/IRG44K/murmur__122_1306325762831_D.mp3','./sound/IRG44K/murmur__185_1308073325396_C.mp3','./sound/IRG44K/murmur__196_1308141034858_B.mp3','./sound/IRG44K/murmur__196_1308141034858_C.mp3','./sound/IRG44K/murmur__200_1308144251434_D.mp3','./sound/IRG44K/murmur__239_1309195730333_C.mp3','./sound/IRG44K/murmur__240_1309196119795_B.mp3','./sound/IRG44K/murmur__240_1309196119795_C.mp3','./sound/IRG44K/murmur__287_1311170903290_C.mp3'];
+    const REG = ['./sound/REG44K/a0001.mp3','./sound/REG44K/a0003.mp3','./sound/REG44K/a0005.mp3','./sound/REG44K/a0010.mp3','./sound/REG44K/a0017.mp3','./sound/REG44K/a0018.mp3','./sound/REG44K/a0020.mp3','./sound/REG44K/a0026.mp3','./sound/REG44K/a0037.mp3','./sound/REG44K/a0040.mp3','./sound/REG44K/a0042.mp3','./sound/REG44K/a0043.mp3','./sound/REG44K/a0046.mp3','./sound/REG44K/a0047.mp3','./sound/REG44K/a0048.mp3','./sound/REG44K/a0057.mp3','./sound/REG44K/b0008.mp3','./sound/REG44K/b0043.mp3','./sound/REG44K/b0046.mp3','./sound/REG44K/b0057.mp3','./sound/REG44K/b0136.mp3','./sound/REG44K/b0140.mp3','./sound/REG44K/b0164.mp3','./sound/REG44K/b0239.mp3','./sound/REG44K/b0248.mp3','./sound/REG44K/c0004.mp3','./sound/REG44K/c0031.mp3','./sound/REG44K/d0002.mp3','./sound/REG44K/d0008.mp3','./sound/REG44K/e00087.mp3','./sound/REG44K/e00135.mp3','./sound/REG44K/e00152.mp3','./sound/REG44K/e00461.mp3','./sound/REG44K/normal__109_1305653646620_C.mp3','./sound/REG44K/normal__127_1306764300147_A.mp3','./sound/REG44K/normal__127_1306764300147_B.mp3','./sound/REG44K/normal__128_1306344005749_B.mp3','./sound/REG44K/normal__129_1306344506305_D.mp3','./sound/REG44K/normal__140_1306519735121_B.mp3','./sound/REG44K/normal__146_1306778707532_B.mp3','./sound/REG44K/normal__150_1306776340746_C.mp3','./sound/REG44K/normal__168_1307970069434_A2.mp3','./sound/REG44K/normal__170_1307970562729_B.mp3','./sound/REG44K/normal__179_1307990076841_B.mp3','./sound/REG44K/normal__184_1308073010307_B.mp3','./sound/REG44K/normal__184_1308073010307_D.mp3','./sound/REG44K/normal__191_1308077299430_B.mp3','./sound/REG44K/normal__194_1308139824187_A.mp3','./sound/REG44K/normal__198_1308141739338_C.mp3','./sound/REG44K/normal__207_1308159792607_C.mp3','./sound/REG44K/normal__224_1308337157445_C.mp3','./sound/REG44K/normal__294_1311681084248_A.mp3'];
+    const IRG = ['./sound/IRG44K/a0007.mp3','./sound/IRG44K/a0011.mp3','./sound/IRG44K/a0012.mp3','./sound/IRG44K/a0019.mp3','./sound/IRG44K/a0025.mp3','./sound/IRG44K/a0027.mp3','./sound/IRG44K/a0028.mp3','./sound/IRG44K/a0029.mp3','./sound/IRG44K/a0032.mp3','./sound/IRG44K/a0050.mp3','./sound/IRG44K/a0053.mp3','./sound/IRG44K/a0055.mp3','./sound/IRG44K/a0069.mp3','./sound/IRG44K/a0080.mp3','./sound/IRG44K/a0081.mp3','./sound/IRG44K/a0085.mp3','./sound/IRG44K/a0086.mp3','./sound/IRG44K/a0093.mp3','./sound/IRG44K/a0094.mp3','./sound/IRG44K/a0102.mp3','./sound/IRG44K/a0105.mp3','./sound/IRG44K/a0106.mp3','./sound/IRG44K/a0118.mp3','./sound/IRG44K/a0125.mp3','./sound/IRG44K/a0127.mp3','./sound/IRG44K/a0129.mp3','./sound/IRG44K/a0136.mp3','./sound/IRG44K/b0003.mp3','./sound/IRG44K/b0006.mp3','./sound/IRG44K/b0027.mp3','./sound/IRG44K/b0028.mp3','./sound/IRG44K/b0047.mp3','./sound/IRG44K/b0051.mp3','./sound/IRG44K/b0052.mp3','./sound/IRG44K/b0058.mp3','./sound/IRG44K/b0064.mp3','./sound/IRG44K/c0003.mp3','./sound/IRG44K/c0007.mp3','./sound/IRG44K/d0005.mp3','./sound/IRG44K/d0013.mp3','./sound/IRG44K/e00005.mp3','./sound/IRG44K/e00007.mp3','./sound/IRG44K/e00009.mp3','./sound/IRG44K/e00015.mp3','./sound/IRG44K/e00016.mp3','./sound/IRG44K/e00019.mp3','./sound/IRG44K/e00021.mp3','./sound/IRG44K/e00023.mp3','./sound/IRG44K/e00024.mp3','./sound/IRG44K/e00026.mp3','./sound/IRG44K/e00029.mp3','./sound/IRG44K/e00030.mp3','./sound/IRG44K/e00033.mp3','./sound/IRG44K/e00034.mp3','./sound/IRG44K/e00035.mp3','./sound/IRG44K/e00036.mp3','./sound/IRG44K/e00038.mp3','./sound/IRG44K/e00040.mp3','./sound/IRG44K/e00041.mp3','./sound/IRG44K/e00043.mp3','./sound/IRG44K/e00046.mp3','./sound/IRG44K/e00047.mp3','./sound/IRG44K/e00051.mp3','./sound/IRG44K/e00052.mp3','./sound/IRG44K/e00053.mp3','./sound/IRG44K/e00054.mp3','./sound/IRG44K/e00055.mp3','./sound/IRG44K/extrastole__128_1306344005749_A.mp3','./sound/IRG44K/extrastole__138_1306762146980_B.mp3','./sound/IRG44K/extrastole__151_1306779785624_B.mp3','./sound/IRG44K/extrastole__163_1307104470471_C.mp3','./sound/IRG44K/extrastole__179_1307990076841_C.mp3','./sound/IRG44K/extrastole__184_1308073010307_A.mp3','./sound/IRG44K/extrastole__198_1308141739338_B1.mp3','./sound/IRG44K/extrastole__210_1308162935880_C.mp3','./sound/IRG44K/extrastole__235_1308749032454_B.mp3','./sound/IRG44K/extrastole__294_1311681084248_C.mp3','./sound/IRG44K/murmur__122_1306325762831_D.mp3','./sound/IRG44K/murmur__185_1308073325396_C.mp3','./sound/IRG44K/murmur__196_1308141034858_B.mp3','./sound/IRG44K/murmur__196_1308141034858_C.mp3','./sound/IRG44K/murmur__200_1308144251434_D.mp3','./sound/IRG44K/murmur__239_1309195730333_C.mp3','./sound/IRG44K/murmur__240_1309196119795_B.mp3','./sound/IRG44K/murmur__240_1309196119795_C.mp3','./sound/IRG44K/murmur__287_1311170903290_C.mp3'];
 
     /* Callback function for saving to database. */
     function saveTrials() {
         let _data = jsPsych.data.getLastTrialData();
-        if (_data.correct) { score++; } else { score--; }
-        console.log(score);
+        _data.correct ? score++ : score--;
+        // console.log(score);
         // document.getElementById("score").innerHTML = String(score);
         
         $.ajax({
@@ -48,20 +49,9 @@
         })
     }
 
-    function updateLoaded() {
-        console.log('Audio Preloaded.');
-    }
-    
     function finished() {
         alert('Experiment Finished!');
         window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSekZNwYwxRPtdmIyze7Ea1TwJrdQ_EHyMrbOLSNsyrsa0__Rg/viewform?usp=sf_link';
-    }
-
-    function startExperiment(exp) {
-        jsPsych.init({
-            timeline: exp,
-            on_finish: finished
-        });
     }
 
     /* Creates the timeline of all trials throughout the experiment. */
@@ -72,11 +62,7 @@
             // Determine correct response
             let _filename = filenames.pop();
             let _correct_res;
-            if (_filename.indexOf('IRG') > -1) { // Irregular
-                _correct_res = i;
-            } else { 
-                _correct_res = r;
-            }
+            (_filename.indexOf('IRG') > -1) ? _correct_res = i : _correct_res = r;
 
             // Create trial
             var trial = {
@@ -84,7 +70,7 @@
                 type: 'audio-keyboard-response',
                 stimulus: _filename,
                 choice: [r, i],
-                prompt: _prompt,
+                prompt: _prompt + _player,
                 correct_response: _correct_res, // Proper answer
                 learning: _learning, // Feedback
                 trial_duration: 8000, // Max length of trial
@@ -99,18 +85,24 @@
 
     /* Pieces all trials together and returns. */
     function renderTrials(reg, irreg) {
-        const learn = _.sample(reg, 10).concat(_.sample(irreg, 10));
-        const test = _.sample(reg, 10).concat(_.sample(irreg, 10));
-        const learning1 = createTrials(_.shuffle(learn), true);
-        const learning2 = createTrials(_.shuffle(learn), true);
-        const learning3 = createTrials(_.shuffle(learn), true);
-        const testing = createTrials(_.shuffle(test), false);
+        var learn = _.sample(reg, 10).concat(_.sample(irreg, 10));
+        var test = _.sample(reg, 10).concat(_.sample(irreg, 10));
+        var learning1 = createTrials(_.shuffle(learn), true);
+        var learning2 = createTrials(_.shuffle(learn), true);
+        var learning3 = createTrials(_.shuffle(learn), true);
+        var testing = createTrials(_.shuffle(test), false);
         return {exp: learning1.concat(learning2, learning3, testing), sounds: test.concat(learn)};
+    }
+
+    function startExperiment(exp) {
+        jsPsych.init({
+            timeline: exp,
+            on_finish: finished
+        });
     }
 
     /* Load all audio then RUN */
     const info = renderTrials(REG, IRG);
-    jsPsych.pluginAPI.preloadAudioFiles(info.sounds, startExperiment(info.exp), updateLoaded());
-
+    startExperiment(info.exp);
     </script>
 </html>
