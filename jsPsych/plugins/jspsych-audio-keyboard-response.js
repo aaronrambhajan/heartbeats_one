@@ -101,6 +101,16 @@ function getTrial(display_element, trial) {
     audio.currentTime = 0;
   }
 
+  function play_feedback(resp) {
+    var feedback;
+    resp ? feedback = './sound/coin.wav' : feedback = './sound/bump.wav';
+    var ctxt = jsPsych.pluginAPI.audioContext();
+    var src = ctxt.createBufferSource();
+    src.buffer = jsPsych.pluginAPI.getAudioBuffer(feedback);
+    src.connect(ctxt.destination);
+    src.start(0);
+  }
+
 /*    // If all audio plays with no response...    
   if(trial.trial_ends_after_audio){
     if(context !== null){
@@ -155,6 +165,7 @@ function getTrial(display_element, trial) {
       var prog = (resp ? ((x/2)*100) : ((x/dur)*100));
       document.querySelector('.progress').style.width = prog + '%';
   }
+
 
   function reset_response_variables() {
       clearInterval(timer);
@@ -249,29 +260,30 @@ function getTrial(display_element, trial) {
           test_phase_text = '<div class="stimuli" id="responded"></div>', 
           respond_text = '<div class="stimuli"><font color="#000080"><b>[r]</b></font> or <font color="C71585"><b>[i]</b></font>?</div>',
           player = '<div class="player"> <p class="message"></p> <div class="controls"> <div class="track"> <div class="progress"></div> <div class="scrubber"> </div> </div> </div> </div>';
+      
+      stop_audio();
+      reset_response_variables();
+      
       switch(action) {
           case 'trial_expired': // End audio, prompt 2-second response window, continue
-              stop_audio();
-              reset_response_variables();
               display_element.innerHTML = respond_text + player;
               timer = setInterval(function() { updateTime(true); }, 1000);
               jsPsych.pluginAPI.setTimeout(function() { respond('trial_ended'); }, 2000);
               return; break; // exit with timeout
           case 'trial_ended':
               changed = trial_end_text;
+              play_feedback(false);
               break;
           case 'correct_response':
-              trial.learning ? changed = correct_text : changed = test_phase_text;
+              trial.learning ? (changed = correct_text, play_feedback(true)) : changed = test_phase_text;
               break;
           case 'wrong_response':
-              trial.learning ? changed = wrong_text : changed = test_phase_text;
+              trial.learning ? (changed = wrong_text, play_feedback(false)) : changed = test_phase_text;
       }
      
       // Clear the experiment palette 
       jsPsych.pluginAPI.clearAllTimeouts();
-      clearInterval(timer);
       jsPsych.pluginAPI.cancelAllKeyboardResponses();
-      stop_audio();
       display_element.innerHTML = changed;
       jsPsych.pluginAPI.setTimeout(function() { end_trial(); }, 3000); // 3-second window to read
   }

@@ -97,7 +97,8 @@
     function startExperiment(exp) {
         jsPsych.init({
             timeline: exp,
-            on_finish: finished
+            on_finish: finished,
+            preload_audio: info.sounds.concat(['./sound/coin.wav', './sound/bump.wav'])
         });
     }
 
