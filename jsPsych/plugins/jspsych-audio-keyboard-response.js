@@ -107,7 +107,11 @@ function getTrial(display_element, trial) {
     var ctxt = jsPsych.pluginAPI.audioContext();
     var src = ctxt.createBufferSource();
     src.buffer = jsPsych.pluginAPI.getAudioBuffer(feedback);
-    src.connect(ctxt.destination);
+    // src.connect(ctxt.destination);
+    var gainNode = ctxt.createGain();
+    src.connect(gainNode);
+    gainNode.connect(ctxt.destination);
+    gainNode.gain.value = 0.3;
     src.start(0);
   }
 
