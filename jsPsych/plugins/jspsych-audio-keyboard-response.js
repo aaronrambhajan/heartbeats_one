@@ -166,7 +166,7 @@ function getTrial(display_element, trial) {
       width = document.querySelector('.track').offsetWidth;
   function updateTime(resp) {
       x++;
-      var prog = (resp ? ((x/2)*100) : ((x/dur)*100));
+      var prog = (resp ? ((x/2)*50) : ((x/dur)*50));
       document.querySelector('.progress').style.width = prog + '%';
   }
 
@@ -220,7 +220,7 @@ function getTrial(display_element, trial) {
   // play audio
   var startTime = context.currentTime;
   play_audio(startTime);
-  let timer = setInterval(function() { updateTime(false); }, 1000);
+  let timer = setInterval(function() { updateTime(false); }, 500);
 
 
   // start the response listener
@@ -271,7 +271,7 @@ function getTrial(display_element, trial) {
       switch(action) {
           case 'trial_expired': // End audio, prompt 2-second response window, continue
               display_element.innerHTML = respond_text + player;
-              timer = setInterval(function() { updateTime(true); }, 1000);
+              timer = setInterval(function() { updateTime(true); }, 500);
               jsPsych.pluginAPI.setTimeout(function() { respond('trial_ended'); }, 2000);
               return; break; // exit with timeout
           case 'trial_ended':
