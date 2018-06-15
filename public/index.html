@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
         <head>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
                 <link href="experiment.css" type="text/css" rel="stylesheet"/>
         </head>
         <body>
@@ -10,36 +9,9 @@
                                         <h1> heartbeats </h1>
                                         <p> In this experiment, you will classify heartbeats as either <font color="#000080"><b>regular</b></font> or <font color="#C71585"><b>irregular</b></font>. You will listen to a heartbeat recording, then respond by pressing  <font color="#000080"><b><i>r</i></b></font>  for <font color="#000080"><b>regular</b></font> or  <font color="#C71585"><b><i>i</i></b></font>  for <font color="#C71585"><b>irregular</b></font>. Each recording will play for 8 seconds, followed by 2 second response window. You may respond during either. There will be two sets of trials, one where you are provided with feedback and one without feedback. You are to ignore any miscellaneous noises that may be heard during the recordings.</p>
                                         <p> By pressing the button below, you consent to your participation in this experiment. You <b>must use headphones</b> for this experiment as the heartbeat sounds are inaudible through speakers. If you have any questions, please contact the experimenter.</p> 
-                                        <button type="button" onclick="getEmail()">Click <b>here</b> to proceed!</button>
+                                        <button type="button" onclick="window.location='consent'">Click <b>here</b> to proceed!</button>
                                 </div>
                         </div>
                 </div>
         </body>
-        <script>
-        function getEmail() {
-            let post = false;
-            let person;            
-                
-            while (!post) {
-                person = prompt("Please enter your e-mail");
-                if (person != null && /^\S+@\S+\.\S+$/.test(person)) {
-                    post = true;
-                }
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "/user-data",
-                data: JSON.stringify({user: person}),
-                contentType: "application/json"
-            }).done(function() {
-                console.log("Wrote user to DB");
-            }).fail(function() {
-                alert("Failure to write e-mail to DB");
-            })
-
-            window.location = "experiment";
-        }
-
-        </script>
 </html>

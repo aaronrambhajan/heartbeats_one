@@ -8,7 +8,7 @@ const trial = require('./models/trials.js');
 const user = require('./models/user.js');
 const DB = require('./models/db.js');
 
-DB.connect(true); // true if in production
+DB.connect(false); // true if in production
 app.use(body_parser.json());
 app.use(express.static(__dirname + '/public'));
 app.use('/jsPsych', express.static(__dirname + "/jsPsych"));
@@ -28,6 +28,10 @@ app.use(session({
 
 app.get('/', function(req, res) {
     res.render('index.html');
+});
+
+app.get('/consent', function(req, res) {
+    res.render('consent.html');
 });
 
 app.get('/experiment', function(req, res) {

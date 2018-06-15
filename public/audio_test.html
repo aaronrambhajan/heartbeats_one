@@ -5,7 +5,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"> </script>
     <script src="../jsPsych/jspsych.js"></script>
-    <script src="../jsPsych/plugins/jspsych-audio-keyboard-response.js"></script> 
+    <script src="../jsPsych/plugins/jspsych-audio-keyboard-response.js"></script>
+    <script src="./trials.js"></script> 
     <link href="./experiment.css" rel="stylesheet" type="text/css"/> 
   </head>
   <body>
@@ -51,9 +52,9 @@
 
     function finished() {
         alert('Experiment Finished!');
-        window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSekZNwYwxRPtdmIyze7Ea1TwJrdQ_EHyMrbOLSNsyrsa0__Rg/viewform?usp=sf_link';
+        window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSekZNwYwxRPtdmIyze7Ea1TwJrdQ_EHyMrbOLSNsyrsa0__Rg/viewform    ?usp=sf_link';
     }
-
+ 
     /* Creates the timeline of all trials throughout the experiment. */
     function createTrials(filenames, _learning) {
         let experiment = [];

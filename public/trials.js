@@ -1,5 +1,5 @@
-const fs = require('fs');
-const _ = require('underscore');
+// `const fs = require('fs');
+// const _ = require('underscore');
 
 /* Returns all filenames within a directory including
  * path prefixes.
@@ -77,6 +77,10 @@ function renderTrials(dir1, dir2) {
     timeline.push.apply(timeline, testing);
 
     return timeline; 
+}
+
+function randomEyes() {
+    return _.shuffle([1, 2, 3]);
 }
 
 module.exports = {
