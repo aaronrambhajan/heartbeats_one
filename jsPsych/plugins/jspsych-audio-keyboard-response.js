@@ -261,7 +261,7 @@ function getTrial(display_element, trial) {
       var correct_text = ('<div class="stimuli" id="responded_correct">Correct. This heartbeat is ' + heartbeat_status),
           wrong_text = ('<div class="stimuli" id="responded_wrong">Incorrect. This heartbeat is ' + heartbeat_status),
           trial_end_text = '<div class="stimuli" id="responded_wrong">Please respond before the trial ends.</div>', 
-          test_phase_text = '<div class="stimuli" id="responded"></div>', 
+          test_phase_text = '<div class="stimuli" id="responded">Responded.</div>', 
           respond_text = '<div class="stimuli"><font color="#000080"><b>[r]</b></font> or <font color="C71585"><b>[i]</b></font>?</div>',
           player = '<div class="player"> <p class="message"></p> <div class="controls"> <div class="track"> <div class="progress"></div> <div class="scrubber"> </div> </div> </div> </div>';
       

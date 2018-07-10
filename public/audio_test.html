@@ -20,9 +20,9 @@
   </body>
     <script>
     let score = 0;
-    const r = 82;
-    const i = 73;
-    const sbj = new Date().valueOf().toString(36) + Math.random().toString(36).substr(2);
+    const r = 82,
+          i = 73,
+          sbj = new Date().valueOf().toString(36) + Math.random().toString(36).substr(2);
     let _score = '<div class="score">0</div>',
         _prompt = '<div class="stimuli">Is this heartbeat regular <font color="#000080"><b>[r]</b></font> or irregular <font color="#C71585"><b>[i]</b></font>?</div>',
         _player = '<div class="player"> <p class="message"></p> <div class="controls"> <div class="track"> <div class="progress"></div> <div class="scrubber"> </div> </div> </div> </div>';
@@ -45,14 +45,14 @@
         }).done(function() {
             console.log("Successfully written to database.");
         }).fail(function() {
-            alert("Problem occurred when writing to database.");
+            console.log("Problem occurred when writing to database.");
             window.location.href = '/error'; // redirect to an 'error' page
         })
     }
 
     function finished() {
         alert('Experiment Finished!');
-        window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSekZNwYwxRPtdmIyze7Ea1TwJrdQ_EHyMrbOLSNsyrsa0__Rg/viewform    ?usp=sf_link';
+        window.location.href = 'https://goo.gl/forms/FuFf8tNSAiAuT3C52';
     }
  
     /* Creates the timeline of all trials throughout the experiment. */

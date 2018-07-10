@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// use jspsych_db
 let _URL = 'mongodb://localhost/jspsych';
 let _PORT = 3000;
 
