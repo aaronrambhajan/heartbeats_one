@@ -66,7 +66,7 @@ function getInfo() {
       trial_ends_after_audio: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Trial ends after audio',
-        default: false,
+        default: true,
         description: 'If true, then the trial will end as soon as the audio file finishes playing.'
       },
       correct_response: {
@@ -107,7 +107,6 @@ function getTrial(display_element, trial) {
     var ctxt = jsPsych.pluginAPI.audioContext();
     var src = ctxt.createBufferSource();
     src.buffer = jsPsych.pluginAPI.getAudioBuffer(feedback);
-    // src.connect(ctxt.destination);
     var gainNode = ctxt.createGain();
     src.connect(gainNode);
     gainNode.connect(ctxt.destination);
@@ -115,17 +114,18 @@ function getTrial(display_element, trial) {
     src.start(0);
   }
 
-/*    // If all audio plays with no response...    
+  let audio_ended = false;
+   // If all audio plays with no response...    
   if(trial.trial_ends_after_audio){
     if(context !== null){
       source.onended = function() {
-        respond('audio_ended');
+        audio_ended = true;        
       }
     } else {
       audio.addEventListener('ended', end_trial);
     }
   }
-*/
+
 
   // show prompt if there is one
   if (trial.prompt !== null) {
@@ -142,7 +142,6 @@ function getTrial(display_element, trial) {
   function stop_audio() {
       if (context !== null) {
           source.stop();
-          source.onended=function() { }
       } else {
           audio.pause();
           audio.removeEventListener('ended', end_trial);
@@ -264,8 +263,9 @@ function getTrial(display_element, trial) {
           test_phase_text = '<div class="stimuli" id="responded">Responded.</div>', 
           respond_text = '<div class="stimuli"><font color="#000080"><b>[r]</b></font> or <font color="C71585"><b>[i]</b></font>?</div>',
           player = '<div class="player"> <p class="message"></p> <div class="controls"> <div class="track"> <div class="progress"></div> <div class="scrubber"> </div> </div> </div> </div>';
-      
-      stop_audio();
+      if (!audio_ended) {
+          stop_audio();
+      } 
       reset_response_variables();
       
       switch(action) {

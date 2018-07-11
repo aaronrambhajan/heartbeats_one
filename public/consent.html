@@ -141,7 +141,7 @@ function getEmail() {
     }).done(function() {
         console.log("Wrote user to DB");
     }).fail(function() {
-        alert("Failed to write e-mail to DB");
+        console.log("Failed to write e-mail to DB");
     })
     window.location = "experiment";
 }

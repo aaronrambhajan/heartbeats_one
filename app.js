@@ -39,6 +39,27 @@ app.get('/experiment', function(req, res) {
 });
 
 app.get('/results', function(req, res) {
+/*    
+    trial.aggregate( [ 
+
+        { $project: 
+            { _id: 0, subject: 1, correct: '$correct', trial: 1, email: 1 } 
+        },
+
+        { $group:
+            { _id: '$subject' }
+        },
+
+        { $match: 
+            { correct: true }  
+        },
+ 
+     ],             
+     function(err, data) {
+        res.send(data);
+     });
+*/ 
+
      trial.find({}, function(err, data) {
         res.send(data);
      });
